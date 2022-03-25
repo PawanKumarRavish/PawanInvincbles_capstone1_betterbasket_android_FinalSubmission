@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/app_form_style"
+    android:background="#f3f3f3">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/addressLl"
+            android:background="@drawable/edit_text_selector"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/currentPositionIMg"
+                    android:src="@drawable/ic_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
+
+
+            </LinearLayout>
+
+
+
+            <AutoCompleteTextView
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="18sp"
+                android:background="@android:color/transparent"
+                android:layout_weight="1.8"
+                android:padding="10dp"
+                android:id="@+id/mProductsSearchEt"
+                android:singleLine="true"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:textColor="@android:color/black"
+                    android:id="@+id/mDescriptionEt"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:hint="Add description of your sale"
+                    android:background="@drawable/edit_text_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp">
+
+
+                </EditText>
+
+                <Button
+                    android:textAllCaps="false"
+                    android:id="@+id/mAddProductsToSaleBtn"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:textColor="@android:color/white"
+                    android:text="Add Products To Sale"
+                    android:background="@drawable/button_bg_red"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp">
+
+                </Button>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

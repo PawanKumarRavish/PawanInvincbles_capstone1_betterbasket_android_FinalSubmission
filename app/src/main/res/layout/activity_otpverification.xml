@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/rootLayout">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            app:titleTextColor="@android:color/black"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ToolbarTheme"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/app_form_style"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/field_margin_top"
+                    android:gravity="center"
+                    android:text="OTP VERIFICATION"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/mMessageTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/field_margin_top"
+                    android:gravity="center"
+                    android:text="An OTP has been sent to your mobile number"
+                    android:textColor="@android:color/black"
+                    android:textSize="14dp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/field_margin_top_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+
+                    <com.mukesh.OtpView
+                        android:id="@+id/otpView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:inputType="number"
+                        android:textColor="@android:color/black"
+                        android:textSize="32dp"
+                        app:hideLineWhenFilled="false"
+                        app:itemCount="6"
+                        app:itemSpacing="6dp"
+                        app:lineColor="@color/red"
+                        app:state_filled="true"
+                        app:viewType="rectangle"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/mResendOTP"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="36dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="@dimen/intro_sub_heading_size"
+                        android:text="@string/don_t_receive_the_otp"
+                        android:textColor="@android:color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/label_margin_top"
+                        android:textSize="@dimen/intro_sub_heading_size"
+                        android:text="@string/resend_otp"
+                        android:textColor="@color/red"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="14dp"
+                    android:text="Please do not press back"
+                    android:textColor="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+
+                <LinearLayout
+                    android:id="@+id/mCounterLl"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="36dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:visibility="gone"
+                        android:textSize="@dimen/_12sdp"
+                        android:text="@string/don_t_receive_the_otp"
+                        android:textColor="@android:color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/counterTv"
+                        android:layout_marginLeft="@dimen/label_margin_top"
+                        android:textSize="@dimen/_12sdp"
+                        android:text="Resend in "
+                        android:textColor="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/field_margin_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:text="@string/verify_code"
+                        android:id="@+id/verifyCodeBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg_red"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+</LinearLayout>
