@@ -41,7 +41,7 @@ import com.project.betterbaskets.utilities.Utils;
 import java.util.Arrays;
 import java.util.List;
 
-// made by pawan Kumar
+
 
 public class AddressActivity extends FragmentActivity implements OnMapReadyCallback {
 
