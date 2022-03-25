@@ -1,5 +1,7 @@
 package com.project.betterbaskets.models;
 
+
+// made by pawan kumar
 public class SearchProductsModel {
 
     String uid;
