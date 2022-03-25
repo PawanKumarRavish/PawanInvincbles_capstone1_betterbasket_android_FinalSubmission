@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.utilities.SharedPreference;
-
+// made by harpreet kaur
 public class BaseActivity extends AppCompatActivity {
 
     SharedPreference sharedPreference;
