@@ -1,7 +1,7 @@
 package com.project.betterbaskets.models;
 
 import java.util.List;
-// made by rishabh bhangu
+
 
 public class SaleModel {
 
