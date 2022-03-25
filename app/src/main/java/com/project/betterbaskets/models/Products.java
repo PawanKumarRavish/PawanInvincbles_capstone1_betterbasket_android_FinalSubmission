@@ -1,6 +1,6 @@
 package com.project.betterbaskets.models;
 
-// made by pawan Kumar
+// made by pawan and rishabh bhangu
 
 public class Products {
 
