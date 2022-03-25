@@ -32,7 +32,9 @@ import com.project.betterbaskets.utilities.Utils;
 import java.util.List;
 
 public class LoginActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
-// made by sandeep kaur
+
+
+
     //This is our tablayout
     private TabLayout tabLayout;
 
