@@ -12,13 +12,13 @@ public class Users {
     String profilePic;
     String address;
     String lat;
-    String lng;
+    String lngg;
 
     public Users(){
 
     }
 
-    public Users(String id,String name, String phone, String password, String type, String profilePic, String address, String lat, String lng) {
+    public Users(String id,String name, String phone, String password, String type, String profilePic, String address, String lat, String lngg) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -27,7 +27,7 @@ public class Users {
         this.profilePic = profilePic;
         this.address = address;
         this.lat = lat;
-        this.lng = lng;
+        this.lngg = lngg;
     }
 
     public String getName() {
@@ -87,11 +87,11 @@ public class Users {
     }
 
     public String getLng() {
-        return lng;
+        return lngg;
     }
 
     public void setLng(String lng) {
-        this.lng = lng;
+        this.lngg = lng;
     }
 
     public String getId() {
