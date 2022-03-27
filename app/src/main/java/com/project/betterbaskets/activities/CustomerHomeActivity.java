@@ -14,6 +14,8 @@ import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.databinding.ActivityCustomerHomeBinding;
+import com.project.betterbaskets.storeFragments.ProductsFrg;
+import com.project.betterbaskets.userfragments.NearbyStoresFrg;
 import com.project.betterbaskets.userfragments.UserHomeFrg;
 import com.project.betterbaskets.utilities.SharedPreference;
 import com.project.betterbaskets.utilities.Utils;
@@ -96,7 +98,11 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             Intent intent = new Intent(CustomerHomeActivity.this, LoginActivity.class);
             startActivity(intent);
             finishAffinity();
+        }else if (id == R.id.nav_nearbystores) {
+            Utils.doFragmentTransition(R.id.mFrameLl,new NearbyStoresFrg(),getSupportFragmentManager(),true);
+
         }
+
         binding.drawerLayout.closeDrawer(Gravity.LEFT);
         return true;
     }

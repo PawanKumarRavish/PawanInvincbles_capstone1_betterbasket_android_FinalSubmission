@@ -47,6 +47,7 @@ public class StoreSalesFrg extends BaseFrg {
     Users loggedStore;
     List<SaleModel> saleList;
     SalesAdapter salesAdapter;
+    String storeId,type;
 
     @Nullable
     @Override
@@ -65,7 +66,17 @@ public class StoreSalesFrg extends BaseFrg {
         salesAdapter = new SalesAdapter(getActivity(), saleList);
         binding.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        getStoreSales(loggedStore.getId());
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            storeId=bundle.getString(Constants.STORE_ID);
+            type=bundle.getString(Constants.TYPE);
+        }
+
+        if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
+            binding.mAddSaleBtn.setVisibility(View.GONE);
+        }
+
+        getStoreSales(storeId);
 
         binding.mAddSaleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +176,7 @@ public class StoreSalesFrg extends BaseFrg {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(getActivity(), "Sale deleted successfully", Toast.LENGTH_SHORT).show();
-                        getStoreSales(loggedStore.getId());
+                        getStoreSales(storeId);
 
                     }else{
                         Toast.makeText(getActivity(), "Error in deleting sale", Toast.LENGTH_SHORT).show();
@@ -194,6 +205,11 @@ public class StoreSalesFrg extends BaseFrg {
                 mNameTv = (TextView) itemView.findViewById(R.id.mNameTv);
                 mDeleteImg=itemView.findViewById(R.id.mDeleteImg);
                 mEditImg=itemView.findViewById(R.id.mEditImg);
+
+                if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
+                    mDeleteImg.setVisibility(View.GONE);
+                    mEditImg.setVisibility(View.GONE);
+                }
 
 
             }

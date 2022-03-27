@@ -3,6 +3,7 @@ package com.project.betterbaskets.storeFragments;
 import static com.project.betterbaskets.utilities.Utils.*;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
@@ -40,6 +42,7 @@ import com.project.betterbaskets.utilities.SharedPreference;
 import com.project.betterbaskets.utilities.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddSaleFrg extends BaseFrg {
@@ -52,6 +55,10 @@ public class AddSaleFrg extends BaseFrg {
 
     AutoCompletePlaceAdapter adapter;
     ProductsAdapter productsAdapter;
+
+    private int mYear, mMonth, mDay;
+    private Calendar selectedCal;
+
 
     @Nullable
     @Override
@@ -75,6 +82,109 @@ public class AddSaleFrg extends BaseFrg {
 
         showStoreProducts(loggedStore.getId());
 
+        binding.starDateRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.hideKeyboard(getActivity());
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    String fmonth, fDate;
+                    int month;
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        try {
+                            if (monthOfYear < 10 && dayOfMonth < 10) {
+
+                                fmonth = "0" + monthOfYear;
+                                month = Integer.parseInt(fmonth) + 1;
+                                fDate = "0" + dayOfMonth;
+                                String paddedMonth = String.format("%02d", month);
+                                binding.mStartDateTv.setText(fDate + "-" + paddedMonth + "-" + year);
+
+                            } else {
+
+                                fmonth = "0" + monthOfYear;
+                                month = Integer.parseInt(fmonth) + 1;
+                                String paddedMonth = String.format("%02d", month);
+                                binding.mStartDateTv.setText(dayOfMonth + "-" + paddedMonth + "-" + year);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                        // mDateTv.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        selectedCal = Calendar.getInstance();
+                        selectedCal.set(Calendar.YEAR, year);
+                        selectedCal.set(Calendar.MONTH, monthOfYear);
+                        selectedCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+
+
+        binding.endDateRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.hideKeyboard(getActivity());
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    String fmonth, fDate;
+                    int month;
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        try {
+                            if (monthOfYear < 10 && dayOfMonth < 10) {
+
+                                fmonth = "0" + monthOfYear;
+                                month = Integer.parseInt(fmonth) + 1;
+                                fDate = "0" + dayOfMonth;
+                                String paddedMonth = String.format("%02d", month);
+                                binding.mEndDateTv.setText(fDate + "-" + paddedMonth + "-" + year);
+
+                            } else {
+
+                                fmonth = "0" + monthOfYear;
+                                month = Integer.parseInt(fmonth) + 1;
+                                String paddedMonth = String.format("%02d", month);
+                                binding.mEndDateTv.setText(dayOfMonth + "-" + paddedMonth + "-" + year);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                        // mDateTv.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        selectedCal = Calendar.getInstance();
+                        selectedCal.set(Calendar.YEAR, year);
+                        selectedCal.set(Calendar.MONTH, monthOfYear);
+                        selectedCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+
 
         binding.mAddProductsToSaleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +198,11 @@ public class AddSaleFrg extends BaseFrg {
                 }
                 if (productsList.size() == 0) {
                     Toast.makeText(getActivity(), "Please add products for sale", Toast.LENGTH_SHORT).show();
+                }else if(binding.mStartDateTv.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Enter sale start date", Toast.LENGTH_SHORT).show();
+                }else if(binding.mEndDateTv.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Enter sale end date", Toast.LENGTH_SHORT).show();
                 }
-
                 else {
                     addSale(productsList);
 
@@ -105,8 +218,8 @@ public class AddSaleFrg extends BaseFrg {
         DatabaseReference newProdRef = productsRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mDescriptionEt.getText().toString().trim(),"","",
-                productsList), new DatabaseReference.CompletionListener() {
+        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mDescriptionEt.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
+                ,binding.mEndDateTv.getText().toString().trim(), productsList), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
