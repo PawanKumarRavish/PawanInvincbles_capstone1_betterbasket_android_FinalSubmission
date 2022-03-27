@@ -113,6 +113,10 @@ public class UserLoginFrg extends BaseFrg {
                     && userList.get(i).getPassword().equalsIgnoreCase(binding.mPasswordEt.getText().toString().trim())){
                 isStoreAvailable=true;
 
+                SharedPreference.setLoggedStore(new Users(userList.get(i).getId(),userList.get(i).getName(),userList.get(i).getPhone(),
+                        userList.get(i).getPassword(),userList.get(i).getType(),userList.get(i).getProfilePic(),
+                        userList.get(i).getAddress(),userList.get(i).getLat(),userList.get(i).getLng()));
+
             }
         }
 
