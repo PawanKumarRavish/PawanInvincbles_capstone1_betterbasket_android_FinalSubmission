@@ -1,61 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:weightSum="2"
         android:background="#FCF4FF"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/_7sdp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <TextView
-            android:layout_weight="1.5"
-            android:id="@+id/mNameTv"
-            android:padding="@dimen/_10sdp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="15dp"
-            android:text="---"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
-
-        </TextView>
-
         <LinearLayout
-            android:gravity="center"
+            android:padding="@dimen/_7sdp"
             android:orientation="horizontal"
-            android:layout_weight="0.5"
-            android:layout_width="0dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/mDeleteImg"
-                android:padding="@dimen/_7sdp"
-                android:src="@drawable/ic_delete"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1.4"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
-            </ImageView>
+                <TextView
+                    android:id="@+id/mTitleTv"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Sale Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/mEditImg"
-                android:padding="@dimen/_7sdp"
-                android:src="@drawable/ic_edit"
-                android:layout_width="wrap_content"
+
+                </TextView>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:id="@+id/mDesTv"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Sale Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/mStartDateTv"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Sale StartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/mEndDateTv"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Sale EndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
-            </ImageView>
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/mImg"
+                    android:src="@drawable/ic_store_img"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp">
+
+
+                </com.mikhaellopez.circularimageview.CircularImageView>
+
+                <TextView
+                    android:id="@+id/mStoreNameTv"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Seller Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <View
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/mCheckoutLl"
+                android:padding="@dimen/_7sdp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/mViewDetailsTv"
+                    android:padding="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="View Sale Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/mCheckoutTv"
+                    android:padding="@dimen/_3sdp"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Proceed to Checkout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/deleteLl"
+                android:padding="@dimen/_7sdp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/mDeleteTv"
+                    android:padding="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Delete Sale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/mEditTv"
+                    android:padding="@dimen/_3sdp"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Edit Sale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
+
+
 
 </LinearLayout>

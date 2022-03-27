@@ -41,7 +41,7 @@
                         android:src="@drawable/menu" />
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_app_logo" />
@@ -74,7 +74,7 @@
         android:fitsSystemWindows="true"
         app:itemIconTint="@color/red"
         app:headerLayout="@layout/nav_header_home"
-        app:menu="@menu/activity_home_drawer"
+        app:menu="@menu/activity_home_drawer_user"
         app:itemTextColor="@android:color/black">
 
         <LinearLayout

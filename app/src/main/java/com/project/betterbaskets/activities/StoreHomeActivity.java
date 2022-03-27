@@ -15,6 +15,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.databinding.ActivityCustomerHomeBinding;
 import com.project.betterbaskets.databinding.ActivityStoreHomeBinding;
+import com.project.betterbaskets.interfaces.Constants;
+import com.project.betterbaskets.models.Users;
 import com.project.betterbaskets.storeFragments.ProductsFrg;
 import com.project.betterbaskets.storeFragments.StoreHomeFrg;
 import com.project.betterbaskets.storeFragments.StoreSalesFrg;
@@ -26,6 +28,7 @@ import com.project.betterbaskets.utilities.Utils;
 public class StoreHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityStoreHomeBinding binding;
+    Users loggedStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class StoreHomeActivity extends BaseActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         binding.navView.setNavigationItemSelectedListener(this);
+        loggedStore= SharedPreference.getLoggedStore();
 
         setUpHomeFrg();
 
@@ -106,7 +110,12 @@ public class StoreHomeActivity extends BaseActivity implements NavigationView.On
             Utils.doFragmentTransition(R.id.mFrameLl,new ProductsFrg(),getSupportFragmentManager(),true);
 
         }else if (id == R.id.nav_sales) {
-            Utils.doFragmentTransition(R.id.mFrameLl,new StoreSalesFrg(),getSupportFragmentManager(),true);
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.STORE_ID,loggedStore.getId());
+            bundle.putString(Constants.TYPE,Constants.TYPE_STORE);
+            StoreSalesFrg storeSalesFrg=new StoreSalesFrg();
+            storeSalesFrg.setArguments(bundle);
+            Utils.doFragmentTransition(R.id.mFrameLl, storeSalesFrg,getSupportFragmentManager(),true);
 
         }
         binding.drawerLayout.closeDrawer(Gravity.LEFT);

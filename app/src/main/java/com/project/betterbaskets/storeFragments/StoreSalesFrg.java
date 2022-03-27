@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class StoreSalesFrg extends BaseFrg {
     Users loggedStore;
     List<SaleModel> saleList;
     SalesAdapter salesAdapter;
+    String storeId,type;
 
     @Nullable
     @Override
@@ -65,7 +67,17 @@ public class StoreSalesFrg extends BaseFrg {
         salesAdapter = new SalesAdapter(getActivity(), saleList);
         binding.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        getStoreSales(loggedStore.getId());
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            storeId=bundle.getString(Constants.STORE_ID);
+            type=bundle.getString(Constants.TYPE);
+        }
+
+        if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
+            binding.mAddSaleBtn.setVisibility(View.GONE);
+        }
+
+        getStoreSales(storeId);
 
         binding.mAddSaleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,16 +153,21 @@ public class StoreSalesFrg extends BaseFrg {
         public void onBindViewHolder(SalesAdapter.MyViewHolder holder, int position) {
 
             SaleModel childFeedsModel = childFeedList.get(position);
-            holder.mNameTv.setText(position+1+". "+childFeedsModel.getDescription());
-            holder.mDeleteImg.setOnClickListener(new View.OnClickListener() {
+            holder.mTitleTv.setText(childFeedsModel.getSaleTitle());
+            holder.mDesTv.setText(childFeedsModel.getDescription());
+            holder.mStartDateTv.setText("Start Date: "+childFeedsModel.getSaleStartDate());
+            holder.mEndDateTv.setText("End Date: "+childFeedsModel.getSaleEndDate());
+            holder.mStoreNameTv.setText(childFeedsModel.getStoreName());
+
+
+            holder.mDeleteTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     deleteSale(childFeedsModel.getUid());
-
                 }
             });
 
-            holder.mEditImg.setOnClickListener(new View.OnClickListener() {
+            holder.mEditTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -165,7 +182,7 @@ public class StoreSalesFrg extends BaseFrg {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(getActivity(), "Sale deleted successfully", Toast.LENGTH_SHORT).show();
-                        getStoreSales(loggedStore.getId());
+                        getStoreSales(storeId);
 
                     }else{
                         Toast.makeText(getActivity(), "Error in deleting sale", Toast.LENGTH_SHORT).show();
@@ -185,15 +202,35 @@ public class StoreSalesFrg extends BaseFrg {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView mNameTv;
-            ImageView mDeleteImg,mEditImg;
+            TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditTv,mStoreNameTv,mDesTv,
+            mStartDateTv,mEndDateTv;
+
+            LinearLayout mCheckoutLl,deleteLl;
 
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                mNameTv = (TextView) itemView.findViewById(R.id.mNameTv);
-                mDeleteImg=itemView.findViewById(R.id.mDeleteImg);
-                mEditImg=itemView.findViewById(R.id.mEditImg);
+                mViewDetailsTv = (TextView) itemView.findViewById(R.id.mViewDetailsTv);
+                mCheckoutTv = (TextView) itemView.findViewById(R.id.mCheckoutTv);
+                mDeleteTv = (TextView) itemView.findViewById(R.id.mDeleteTv);
+                mEditTv = (TextView) itemView.findViewById(R.id.mEditTv);
+                mStoreNameTv = (TextView) itemView.findViewById(R.id.mStoreNameTv);
+                mTitleTv = (TextView) itemView.findViewById(R.id.mTitleTv);
+                mDesTv = (TextView) itemView.findViewById(R.id.mDesTv);
+                mStartDateTv = (TextView) itemView.findViewById(R.id.mStartDateTv);
+                mEndDateTv = (TextView) itemView.findViewById(R.id.mEndDateTv);
+                mCheckoutLl = (LinearLayout) itemView.findViewById(R.id.mCheckoutLl);
+                deleteLl = (LinearLayout) itemView.findViewById(R.id.deleteLl);
+
+
+
+                if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
+                    mCheckoutLl.setVisibility(View.VISIBLE);
+                    deleteLl.setVisibility(View.GONE);
+                }else{
+                    mCheckoutLl.setVisibility(View.GONE);
+                    deleteLl.setVisibility(View.VISIBLE);
+                }
 
 
             }
