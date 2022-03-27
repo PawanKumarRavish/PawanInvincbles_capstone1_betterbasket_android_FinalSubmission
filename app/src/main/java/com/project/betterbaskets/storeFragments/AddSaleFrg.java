@@ -32,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.betterbaskets.BaseFrg;
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.databinding.AddSaleLayoutBinding;
-import com.project.betterbaskets.databinding.ProductsLayoutBinding;
 import com.project.betterbaskets.interfaces.Constants;
 import com.project.betterbaskets.models.Products;
 import com.project.betterbaskets.models.SaleModel;
@@ -198,10 +197,15 @@ public class AddSaleFrg extends BaseFrg {
                 }
                 if (productsList.size() == 0) {
                     Toast.makeText(getActivity(), "Please add products for sale", Toast.LENGTH_SHORT).show();
-                }else if(binding.mStartDateTv.getText().toString().trim().isEmpty()){
+                }else if(binding.mTitleEt.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Enter sale title", Toast.LENGTH_SHORT).show();
+                }
+                else if(binding.mStartDateTv.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Enter sale start date", Toast.LENGTH_SHORT).show();
                 }else if(binding.mEndDateTv.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Enter sale end date", Toast.LENGTH_SHORT).show();
+                }else if(binding.mDescriptionEt.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Enter sale description", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     addSale(productsList);
@@ -218,7 +222,7 @@ public class AddSaleFrg extends BaseFrg {
         DatabaseReference newProdRef = productsRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mDescriptionEt.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
+        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
                 ,binding.mEndDateTv.getText().toString().trim(), productsList), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {

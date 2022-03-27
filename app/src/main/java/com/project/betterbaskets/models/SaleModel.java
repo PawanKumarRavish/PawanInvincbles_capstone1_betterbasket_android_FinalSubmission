@@ -8,6 +8,7 @@ public class SaleModel {
     String uid;
     String storeId;
     String storeName;
+    String saleTitle;
     String description;
     String saleStartDate;
     String saleEndDate;
@@ -16,10 +17,11 @@ public class SaleModel {
     public SaleModel() {
     }
 
-    public SaleModel(String uid, String storeId,String storeName, String description, String saleStartDate, String saleEndDate,List<SearchProductsModel> productsList) {
+    public SaleModel(String uid, String storeId,String storeName,String saleTitle, String description, String saleStartDate, String saleEndDate,List<SearchProductsModel> productsList) {
         this.uid = uid;
         this.storeId = storeId;
         this.storeName = storeName;
+        this.saleTitle = saleTitle;
         this.description = description;
         this.saleStartDate = saleStartDate;
         this.saleEndDate = saleEndDate;
@@ -80,5 +82,13 @@ public class SaleModel {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public String getSaleTitle() {
+        return saleTitle;
+    }
+
+    public void setSaleTitle(String saleTitle) {
+        this.saleTitle = saleTitle;
     }
 }
