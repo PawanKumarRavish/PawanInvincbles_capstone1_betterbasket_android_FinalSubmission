@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            app:titleTextColor="@android:color/black"
+            app:title="Checkout"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ToolbarTheme">
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_marginTop="33dp"
+                android:gravity="center"
+                android:fontFamily="@font/robotto_bold"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:text="Checkout! "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/mAmt"
+                android:layout_marginTop="@dimen/label_margin_top"
+                android:gravity="center"
+                android:fontFamily="@font/robotto_regular"
+                android:textSize="16dp"
+                android:textColor="@android:color/black"
+                android:text="Total Amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+            <com.stripe.android.view.CardInputWidget
+                android:layout_margin="@dimen/_10sdp"
+                android:id="@+id/cardInputWidget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/field_margin_top"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/mPayBtn"
+                    android:padding="@dimen/_7sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/button_bg_red"
+                    android:gravity="center"
+                    android:text="@string/pay"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout
+        >
+
+</LinearLayout>

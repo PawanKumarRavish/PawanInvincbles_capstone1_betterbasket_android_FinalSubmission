@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/mImg"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:src="@drawable/ic_tick_green">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/mThankyouTv"
+                android:layout_marginTop="33dp"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:textColor="#349C2B"
+                android:text="Thank You!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/mTextTv"
+                android:layout_margin="@dimen/_5sdp"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:textColor="@android:color/black"
+                android:text="Your payment has been done successfully. Please Click Ok to be Redirected to  home screen."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:gravity="center"
+                android:layout_marginTop="52dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:backgroundTint="#349C2B"
+                    android:id="@+id/homeBtn"
+                    android:layout_width="92dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/button_bg_red"
+                    android:gravity="center"
+                    android:text="OK"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout
+        >
+
+</LinearLayout>
