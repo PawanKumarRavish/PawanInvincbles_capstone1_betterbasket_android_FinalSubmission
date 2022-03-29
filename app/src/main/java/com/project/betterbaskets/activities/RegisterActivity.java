@@ -50,6 +50,18 @@ public class RegisterActivity extends BaseActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null){
+            type=bundle.getString(Constants.TYPE);
+            if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
+                binding.customerCb.setChecked(true);
+                binding.storeCb.setChecked(false);
+            }else{
+                binding.customerCb.setChecked(false);
+                binding.storeCb.setChecked(true);
+            }
+        }
+
         binding.mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

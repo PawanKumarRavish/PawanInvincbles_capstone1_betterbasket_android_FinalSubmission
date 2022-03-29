@@ -100,14 +100,11 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             startActivity(intent);
             finishAffinity();
         }else if (id == R.id.nav_nearbystores) {
-
             Utils.doFragmentTransition(R.id.mFrameLl,new NearbyStoresFrg(),getSupportFragmentManager(),true);
-
         }
 
         else if (id == R.id.nav_history) {
             Utils.doFragmentTransition(R.id.mFrameLl,new PaymentHistory(),getSupportFragmentManager(),true);
-
         }
 
         binding.drawerLayout.closeDrawer(Gravity.LEFT);

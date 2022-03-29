@@ -69,7 +69,9 @@ public class StoreLoginFrg extends BaseFrg {
         binding.mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                Intent intent=new Intent(getActivity(),RegisterActivity.class);
+                intent.putExtra(Constants.TYPE,Constants.TYPE_STORE);
+                startActivity(intent);
             }
         });
     }
