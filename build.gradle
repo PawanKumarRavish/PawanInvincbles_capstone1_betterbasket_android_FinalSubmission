@@ -3,6 +3,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
+        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
@@ -19,6 +21,8 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }
+        // This private repository is required to resolve the Cardinal SDK transitive dependency.
+
     }
 }
 
@@ -26,3 +30,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+
+

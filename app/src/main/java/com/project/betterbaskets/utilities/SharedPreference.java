@@ -36,6 +36,8 @@ public class SharedPreference {
     }*/
 
 
+
+
     public static String getLat() {
         return mPref.getString(Constants.LAT, "");
     }
