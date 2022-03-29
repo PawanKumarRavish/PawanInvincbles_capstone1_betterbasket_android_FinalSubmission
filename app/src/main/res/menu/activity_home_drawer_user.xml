@@ -11,6 +11,11 @@
             android:id="@+id/nav_nearbystores"
             android:title="Show Nearby Stores" />
 
+        <item
+            android:icon="@drawable/ic_stores"
+            android:id="@+id/nav_history"
+            android:title="Payment History" />
+
 
         <item
             android:id="@+id/nav_logout"

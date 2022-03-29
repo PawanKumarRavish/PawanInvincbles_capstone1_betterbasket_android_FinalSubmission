@@ -16,6 +16,7 @@ import com.project.betterbaskets.R;
 import com.project.betterbaskets.databinding.ActivityCustomerHomeBinding;
 import com.project.betterbaskets.storeFragments.ProductsFrg;
 import com.project.betterbaskets.userfragments.NearbyStoresFrg;
+import com.project.betterbaskets.userfragments.PaymentHistory;
 import com.project.betterbaskets.userfragments.UserHomeFrg;
 import com.project.betterbaskets.utilities.SharedPreference;
 import com.project.betterbaskets.utilities.Utils;
@@ -99,7 +100,13 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             startActivity(intent);
             finishAffinity();
         }else if (id == R.id.nav_nearbystores) {
+
             Utils.doFragmentTransition(R.id.mFrameLl,new NearbyStoresFrg(),getSupportFragmentManager(),true);
+
+        }
+
+        else if (id == R.id.nav_history) {
+            Utils.doFragmentTransition(R.id.mFrameLl,new PaymentHistory(),getSupportFragmentManager(),true);
 
         }
 
