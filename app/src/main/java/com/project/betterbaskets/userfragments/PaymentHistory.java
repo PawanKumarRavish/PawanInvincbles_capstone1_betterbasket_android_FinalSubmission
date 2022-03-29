@@ -79,7 +79,9 @@ public class PaymentHistory extends BaseFrg {
                 hideProgressing();
                 for (DataSnapshot s: snapshot.getChildren()) {
                     PaymentModel users = s.getValue(PaymentModel.class);
-                    paymentList.add(users);
+                    if(loggedStore.getId().equalsIgnoreCase(users.getUserId())){
+                        paymentList.add(users);
+                    }
 
                 }
 
@@ -132,6 +134,12 @@ public class PaymentHistory extends BaseFrg {
             PaymentModel childFeedsModel = childFeedList.get(position);
             holder.mOrderIdTv.setText("Payment Id: "+childFeedsModel.getPaymentId());
             holder.mHeadingTv.setText(childFeedsModel.getSaleModel().getSaleTitle());
+            int amountToShow=0;
+            for(int i=0;i<childFeedsModel.getSaleModel().getProductsList().size();i++){
+                amountToShow=amountToShow+Integer.parseInt(childFeedsModel.getSaleModel().getProductsList().get(i).getSalePrice());
+            }
+
+            holder.mAmountTv.setText("Paid: "+Constants.RUPEE_SYMBOL+amountToShow);
 
         }
 

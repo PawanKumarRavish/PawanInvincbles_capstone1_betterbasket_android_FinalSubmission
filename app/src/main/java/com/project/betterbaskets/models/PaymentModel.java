@@ -4,14 +4,18 @@ public class PaymentModel {
     String uid;
     String paymentId;
     SaleModel saleModel;
+    String userId;
+    String totalAmount;
 
     public PaymentModel() {
     }
 
-    public PaymentModel(String uid, String paymentId, SaleModel saleModel) {
+    public PaymentModel(String uid, String paymentId, SaleModel saleModel,String userId,String totalAmount) {
         this.uid = uid;
         this.paymentId = paymentId;
         this.saleModel = saleModel;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
     }
 
     public String getUid() {
@@ -36,5 +40,21 @@ public class PaymentModel {
 
     public void setSaleModel(SaleModel saleModel) {
         this.saleModel = saleModel;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

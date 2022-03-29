@@ -37,6 +37,14 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
+            <ImageView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/stripe"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp">
+
+            </ImageView>
+
 
             <TextView
                 android:layout_marginTop="33dp"

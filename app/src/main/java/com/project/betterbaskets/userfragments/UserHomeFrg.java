@@ -36,6 +36,7 @@ import com.project.betterbaskets.databinding.UserHomeFrgBinding;
 import com.project.betterbaskets.interfaces.Constants;
 import com.project.betterbaskets.models.Products;
 import com.project.betterbaskets.models.Users;
+import com.project.betterbaskets.storeFragments.StoreSalesFrg;
 import com.project.betterbaskets.utilities.SharedPreference;
 import com.project.betterbaskets.utilities.Utils;
 
@@ -143,11 +144,13 @@ public class UserHomeFrg extends BaseFrg implements OnMapReadyCallback {
                     LatLng newLatLng=new LatLng(Double.parseDouble(place.getLat()),Double.parseDouble(place.getLng()));
                     if (latLon.equals(newLatLng)){
                         Toast.makeText(getActivity(), place.getName(), Toast.LENGTH_SHORT).show();
-                        /*Bundle bundle=new Bundle();
-                        bundle.putString(Constants.STORE_ID,place.getStoreid());
-                        StoreDetailsFrg storeDetailsFrg=new StoreDetailsFrg();
-                        storeDetailsFrg.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mFrameLl, storeDetailsFrg).addToBackStack(null).commit();*/
+                        Bundle bundle=new Bundle();
+                        bundle.putString(Constants.STORE_ID,place.getId());
+                        bundle.putString(Constants.TYPE,Constants.TYPE_CUSTOMER);
+                        StoreSalesFrg storeSalesFrg=new StoreSalesFrg();
+                        storeSalesFrg.setArguments(bundle);
+                        Utils.doFragmentTransition(R.id.mFrameLl,storeSalesFrg,getActivity().getSupportFragmentManager(),true);
+
                     }
 
                 }

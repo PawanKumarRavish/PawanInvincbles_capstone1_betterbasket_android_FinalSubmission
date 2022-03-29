@@ -82,7 +82,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListener,ApiResultCallback<PaymentIntentResult> {
+public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentIntentResult> {
 
     StoreSalesLayoutBinding binding;
     DatabaseReference databaseReference;
@@ -94,6 +94,7 @@ public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListe
     private Stripe stripe;
     private String paymentIntentClientSecret = "";
     Dialog alertDialog;
+    SaleModel saleModelToSend;
 
 
     @Nullable
@@ -174,48 +175,6 @@ public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListe
     }
 
 
-    private void generateRazorOrder(int amount) {
-        showProgressing(getActivity());
-        //callServicePOST("https://api.razorpay.com/v1/orders", amount);
-    }
-
-
-    private void openRazorCheckoutPage(String orderId, String currency, String amount, String receipt) {
-
-        final Checkout co = new Checkout();
-
-        try {
-            JSONObject options = new JSONObject();
-            options.put("name", "Better Baskets");
-            options.put("description", "Payment");
-            options.put("image", "");
-            options.put("order_id", orderId);//from response of step 3.
-            options.put("theme.color", "#3fb8d3");
-            options.put("currency", currency);
-            options.put("amount", amount);//pass amount in currency subunits
-            options.put("prefill.email", loggedStore.getName());
-            options.put("prefill.contact", loggedStore.getPhone());
-
-            co.open(getActivity(), options);
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-                    .show();
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
-        Toast.makeText(getActivity(), "Payment Successful: " + razorpayPaymentId, Toast.LENGTH_LONG).show();
-        showSuccessDialog(razorpayPaymentId);
-    }
-
-    @Override
-    public void onPaymentError(int code, String response, PaymentData paymentData) {
-        Toast.makeText(getActivity(), "Payment failed: " + code + " " + response, Toast.LENGTH_LONG).show();
-
-    }
 
     private void showSuccessDialog(String razorpayPaymentId) {
         Dialog alertDialog = new Dialog(getActivity());
@@ -248,7 +207,7 @@ public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListe
         DatabaseReference newProdRef = paymentRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new PaymentModel(uid,razorpayPaymentId,childFeedsModel), new DatabaseReference.CompletionListener() {
+        newProdRef.setValue(new PaymentModel(uid,razorpayPaymentId,saleModelToSend,loggedStore.getId(),""), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
@@ -301,11 +260,10 @@ public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListe
             return new SalesAdapter.MyViewHolder(view);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onBindViewHolder(SalesAdapter.MyViewHolder holder, int position) {
 
-             childFeedsModel = childFeedList.get(position);
+             SaleModel childFeedsModel = childFeedList.get(position);
             holder.mTitleTv.setText(childFeedsModel.getSaleTitle());
             holder.mDesTv.setText(childFeedsModel.getDescription());
             holder.mStartDateTv.setText("Start Date: "+childFeedsModel.getSaleStartDate());
@@ -334,13 +292,12 @@ public class StoreSalesFrg extends BaseFrg implements PaymentResultWithDataListe
                 }
             });
 
-            int finalTotalAmountToPay = totalAmountToPay;
+             int finalTotalAmountToPay = totalAmountToPay;
             holder.mCheckoutTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    saleModelToSend=childFeedsModel;
                     doStripePayment(finalTotalAmountToPay);
-                    //startActivity(new Intent(getActivity(), DemoActivity.class));
-                    //generateRazorOrder(finalTotalAmountToPay);
 
 
                 }

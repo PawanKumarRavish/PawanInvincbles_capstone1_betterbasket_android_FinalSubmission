@@ -91,8 +91,9 @@
                 </com.mikhaellopez.circularimageview.CircularImageView>
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/mStoreNameTv"
-                    android:textColor="@color/red"
+                    android:textColor="@color/teal_700"
                     android:textSize="@dimen/_11sdp"
                     android:text="Seller Name"
                     android:layout_width="wrap_content"
@@ -167,9 +168,11 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_gravity="right"
+                    android:gravity="right"
                     android:id="@+id/mDeleteTv"
                     android:padding="@dimen/_3sdp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:textColor="@color/red"
                     android:textSize="@dimen/_12sdp"
                     android:text="Delete Sale"
@@ -180,6 +183,7 @@
                 </TextView>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/mEditTv"
                     android:padding="@dimen/_3sdp"
                     android:gravity="right"

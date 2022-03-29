@@ -12,6 +12,9 @@
         <entry key="app/src/main/res/layout/activity_store_home.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/activity_stripe_payment.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/add_sale_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_add_product.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_edit_product.xml" value="0.159375" />
+        <entry key="app/src/main/res/layout/filtered_products_design.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/item_history_design.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/item_sales_design.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_stores_design.xml" value="0.18020833333333333" />

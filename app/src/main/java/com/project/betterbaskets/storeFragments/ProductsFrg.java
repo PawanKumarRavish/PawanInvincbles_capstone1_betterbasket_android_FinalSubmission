@@ -194,13 +194,6 @@ public class ProductsFrg extends BaseFrg {
                     hideProgressing();
                     Toast.makeText(getActivity(), "Product saved successfully", Toast.LENGTH_LONG).show();
                     alertDialog.dismiss();
-                   /* new Handler().postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            showStoreProducts(loggedStore.getId());
-                        }
-                    }, SPLASH_TIME_OUT);*/
 
 
                 }else{
@@ -243,7 +236,13 @@ public class ProductsFrg extends BaseFrg {
             holder.mDeleteImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    deleteProduct(childFeedsModel.getUid());
+                    Utils.showDialog(getActivity(), "Alert", "Are you sure you want to delete the product", new Utils.iPostiveBtnListener() {
+                        @Override
+                        public void onPositiveBtnClicked() {
+                            deleteProduct(childFeedsModel.getUid());
+                        }
+                    });
+
 
                 }
             });
@@ -251,6 +250,7 @@ public class ProductsFrg extends BaseFrg {
             holder.mEditImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    showEditProductDialog(childFeedsModel);
 
                 }
             });
@@ -277,6 +277,61 @@ public class ProductsFrg extends BaseFrg {
 
             }
         }
+    }
+
+    private void showEditProductDialog(Products childFeedsModel) {
+        View view = getLayoutInflater().inflate(R.layout.dialog_edit_product, null);
+        Button mAddProduct=view.findViewById(R.id.mAddProductBtn);
+        TextInputEditText mName=view.findViewById(R.id.mNameEt);
+
+        mName.setText(childFeedsModel.getName());
+
+
+        mAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mName.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Add product name", Toast.LENGTH_SHORT).show();
+                } else{
+                    editProduct(childFeedsModel,mName.getText().toString().trim());
+                }
+            }
+        });
+
+
+        alertDialog = new Dialog(getActivity());
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //this line MUST BE BEFORE setContentView
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(true);
+        alertDialog.setContentView(view);
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+
+    }
+
+    private void editProduct(Products childFeedsModel, String name) {
+        showProgressing(getActivity());
+        DatabaseReference productsRef = databaseReference.child(Constants.REF_STORE_PRODUCTS).child(childFeedsModel.getUid());
+
+        productsRef.setValue(new Products(childFeedsModel.getUid(),name,loggedStore.getId()), new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if(error==null){
+                    hideProgressing();
+                    Toast.makeText(getActivity(), "Product edited successfully", Toast.LENGTH_LONG).show();
+                    alertDialog.dismiss();
+
+                }else{
+                    hideProgressing();
+                    Toast.makeText(getActivity(), "Error in editing product "+error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
     }
 
     private void deleteProduct(String uid) {
