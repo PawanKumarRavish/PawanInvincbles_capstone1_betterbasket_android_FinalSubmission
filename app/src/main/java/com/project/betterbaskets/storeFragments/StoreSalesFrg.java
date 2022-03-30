@@ -270,6 +270,16 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             holder.mEndDateTv.setText("End Date: "+childFeedsModel.getSaleEndDate());
             holder.mStoreNameTv.setText(childFeedsModel.getStoreName());
 
+            if(Utils.isSaleExpired(childFeedsModel.getSaleEndDate())){
+                holder.mStatusTv.setText(Constants.EXPIRED);
+                holder.mStatusTv.setTextColor(getResources().getColor(R.color.red));
+            }else{
+                holder.mStatusTv.setText(Constants.ACTIVE);
+                holder.mStatusTv.setTextColor(getResources().getColor(R.color.green));
+
+            }
+
+
             int totalAmountToPay=0;
             for(int i=0;i<childFeedsModel.getProductsList().size();i++){
                 totalAmountToPay=totalAmountToPay+Integer.parseInt(childFeedsModel.getProductsList().get(i).getSalePrice());
@@ -296,8 +306,13 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             holder.mCheckoutTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    saleModelToSend=childFeedsModel;
-                    doStripePayment(finalTotalAmountToPay);
+                    if(holder.mStatusTv.getText().toString().equalsIgnoreCase(Constants.ACTIVE)){
+                        saleModelToSend=childFeedsModel;
+                        doStripePayment(finalTotalAmountToPay);
+                    }else{
+                        Toast.makeText(getActivity(), "This sale is expired", Toast.LENGTH_SHORT).show();
+                    }
+
 
 
                 }
@@ -331,7 +346,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditTv,mStoreNameTv,mDesTv,
+            TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditTv,mStoreNameTv,mDesTv,mStatusTv,
             mStartDateTv,mEndDateTv;
 
             LinearLayout mCheckoutLl,deleteLl;
@@ -348,6 +363,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 mDesTv = (TextView) itemView.findViewById(R.id.mDesTv);
                 mStartDateTv = (TextView) itemView.findViewById(R.id.mStartDateTv);
                 mEndDateTv = (TextView) itemView.findViewById(R.id.mEndDateTv);
+                mStatusTv = (TextView) itemView.findViewById(R.id.mStatusTv);
                 mCheckoutLl = (LinearLayout) itemView.findViewById(R.id.mCheckoutLl);
                 deleteLl = (LinearLayout) itemView.findViewById(R.id.deleteLl);
 

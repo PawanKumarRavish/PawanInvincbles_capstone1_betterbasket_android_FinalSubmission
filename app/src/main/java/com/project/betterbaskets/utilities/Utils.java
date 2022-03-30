@@ -38,8 +38,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.project.betterbaskets.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -285,6 +289,59 @@ public class Utils {
       DatabaseReference mDatabaseReference=mDatabase.getReference();
       return mDatabaseReference;
 
+  }
+
+  public static boolean isSaleExpired(String input){
+        boolean expired=false;
+      Date c = Calendar.getInstance().getTime();
+      Log.e("Date",c+"");
+
+      SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+      String formattedDate = df.format(c);
+      String startDate = formattedDate;
+      String endDate = input;
+
+      try {
+          Date start = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH)
+                  .parse(startDate);
+          Date end = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH)
+                  .parse(endDate);
+
+          if (start.compareTo(end) > 0) {
+              expired=true;
+              System.out.println("start is after end");
+          } else if (start.compareTo(end) < 0) {
+              expired=false;
+              System.out.println("start is before end");
+          } else if (start.compareTo(end) == 0) {
+              expired=false;
+              System.out.println("start is equal to end");
+          } else {
+              System.out.println("Something weird happened...");
+          }
+
+      } catch (ParseException e) {
+          e.printStackTrace();
+      }
+
+       /* // Get Current Date Time
+      Calendar c = Calendar.getInstance();
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      String getCurrentDateTime = sdf.format(c.getTime());
+      String getMyTime=input;
+      Log.d("Current",getCurrentDateTime);
+      Log.d("End Date",getMyTime);
+
+      int i = getCurrentDateTime.compareTo(getMyTime);
+      Log.e("Date",i+"");
+
+      if (getCurrentDateTime.compareTo(getMyTime) < 0) {
+          expired=false; }
+      else {
+          expired=true;
+      }*/
+
+      return expired;
   }
 
 

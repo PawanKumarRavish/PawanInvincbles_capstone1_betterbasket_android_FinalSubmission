@@ -105,14 +105,14 @@ public class AddSaleFrg extends BaseFrg {
                                 month = Integer.parseInt(fmonth) + 1;
                                 fDate = "0" + dayOfMonth;
                                 String paddedMonth = String.format("%02d", month);
-                                binding.mStartDateTv.setText(fDate + "-" + paddedMonth + "-" + year);
+                                binding.mStartDateTv.setText(year +"/" + paddedMonth + "/" + fDate);
 
                             } else {
 
                                 fmonth = "0" + monthOfYear;
                                 month = Integer.parseInt(fmonth) + 1;
                                 String paddedMonth = String.format("%02d", month);
-                                binding.mStartDateTv.setText(dayOfMonth + "-" + paddedMonth + "-" + year);
+                                binding.mStartDateTv.setText(year +"/"+ paddedMonth + "/" + dayOfMonth);
                             }
 
                         } catch (Exception e) {
@@ -157,14 +157,14 @@ public class AddSaleFrg extends BaseFrg {
                                 month = Integer.parseInt(fmonth) + 1;
                                 fDate = "0" + dayOfMonth;
                                 String paddedMonth = String.format("%02d", month);
-                                binding.mEndDateTv.setText(fDate + "-" + paddedMonth + "-" + year);
+                                binding.mEndDateTv.setText(year +"/" + paddedMonth + "/" + fDate);
 
                             } else {
 
                                 fmonth = "0" + monthOfYear;
                                 month = Integer.parseInt(fmonth) + 1;
                                 String paddedMonth = String.format("%02d", month);
-                                binding.mEndDateTv.setText(dayOfMonth + "-" + paddedMonth + "-" + year);
+                                binding.mEndDateTv.setText(year +"/"+ paddedMonth + "/" + dayOfMonth );
                             }
 
                         } catch (Exception e) {

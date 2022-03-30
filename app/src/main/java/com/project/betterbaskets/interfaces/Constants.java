@@ -27,6 +27,8 @@ public interface Constants {
     public static final String STORE_ID = "storeId";
     public static final String PROFILE_IMG = "profileImg";
     public static final String RUPEE_SYMBOL = "$";
+    public static final String EXPIRED = "Expired";
+    public static final String ACTIVE = "Active";
     public static final String CLIENT_ID = "AWVBYefZIKZ_RLhFmV6CgwFKJPm_g3fZ14i1kw9B2Pt9UiRXo6AJjTBdt2ZeOoCjU2GxI8c0dvH5IXbm";
 
 
