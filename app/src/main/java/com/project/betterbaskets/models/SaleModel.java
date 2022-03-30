@@ -13,11 +13,12 @@ public class SaleModel {
     String saleStartDate;
     String saleEndDate;
     List<SearchProductsModel> productsList;
+    String downloadUrl;
 
     public SaleModel() {
     }
 
-    public SaleModel(String uid, String storeId,String storeName,String saleTitle, String description, String saleStartDate, String saleEndDate,List<SearchProductsModel> productsList) {
+    public SaleModel(String uid, String storeId,String storeName,String saleTitle, String description, String saleStartDate, String saleEndDate,List<SearchProductsModel> productsList,String downloadUrl) {
         this.uid = uid;
         this.storeId = storeId;
         this.storeName = storeName;
@@ -26,6 +27,7 @@ public class SaleModel {
         this.saleStartDate = saleStartDate;
         this.saleEndDate = saleEndDate;
         this.productsList = productsList;
+        this.downloadUrl = downloadUrl;
     }
 
     public String getUid() {
@@ -90,5 +92,13 @@ public class SaleModel {
 
     public void setSaleTitle(String saleTitle) {
         this.saleTitle = saleTitle;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 }

@@ -1,11 +1,16 @@
 package com.project.betterbaskets.storeFragments;
 
+import static android.app.Activity.RESULT_OK;
 import static com.project.betterbaskets.utilities.Utils.*;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +30,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.project.betterbaskets.BaseFrg;
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.databinding.AddSaleLayoutBinding;
@@ -40,6 +50,7 @@ import com.project.betterbaskets.models.Users;
 import com.project.betterbaskets.utilities.SharedPreference;
 import com.project.betterbaskets.utilities.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -59,6 +70,16 @@ public class AddSaleFrg extends BaseFrg {
     private Calendar selectedCal;
 
 
+    //constant to track image chooser intent
+    private static final int PICK_IMAGE_REQUEST = 234;
+    //uri to store file
+    private Uri filePath;
+    //firebase objects
+    private StorageReference storageReference;
+    ImageView mProductImg;
+    Uri downloadUrl=null;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +92,7 @@ public class AddSaleFrg extends BaseFrg {
         super.onViewCreated(view, savedInstanceState);
 
         databaseReference = initialiseFirebase();
+        storageReference = FirebaseStorage.getInstance().getReference();
         loggedStore= SharedPreference.getLoggedStore();
         productsList=new ArrayList<>();
         searchList = new ArrayList<>();
@@ -197,6 +219,8 @@ public class AddSaleFrg extends BaseFrg {
                 }
                 if (productsList.size() == 0) {
                     Toast.makeText(getActivity(), "Please add products for sale", Toast.LENGTH_SHORT).show();
+                }else if (downloadUrl == null) {
+                    Toast.makeText(getActivity(), "Please add image", Toast.LENGTH_SHORT).show();
                 }else if(binding.mTitleEt.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Enter sale title", Toast.LENGTH_SHORT).show();
                 }
@@ -208,22 +232,33 @@ public class AddSaleFrg extends BaseFrg {
                     Toast.makeText(getActivity(), "Enter sale description", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    addSale(productsList);
+                    addSale(productsList,downloadUrl);
 
                 }
             }
         });
+
+
+        binding.mProductImgLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
     }
 
-    private void addSale(List<SearchProductsModel> productsList) {
+    private void addSale(List<SearchProductsModel> productsList, Uri downloadUrl) {
 
         showProgressing(getActivity());
         DatabaseReference productsRef = databaseReference.child(Constants.REF_STORE_SALES);
         DatabaseReference newProdRef = productsRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
-                ,binding.mEndDateTv.getText().toString().trim(), productsList), new DatabaseReference.CompletionListener() {
+        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(), binding.mStartDateTv.getText().toString().trim()
+                ,binding.mEndDateTv.getText().toString().trim(), productsList,downloadUrl.toString()), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
@@ -285,6 +320,56 @@ public class AddSaleFrg extends BaseFrg {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                binding.mProductImg.setImageBitmap(bitmap);
+
+                uploadImage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        if (filePath != null) {
+            showProgressing(getActivity());
+            StorageReference sRef = storageReference.child(Constants.REF_SALE_IMAGES).child(System.currentTimeMillis() + "." + Utils.getFileExtension(getActivity(),filePath));
+
+            //adding the file to reference
+            sRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    hideProgressing();
+
+                    //displaying success toast
+                    Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                    sRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            downloadUrl = uri;
+                            Log.e("Uri",downloadUrl+"");
+                        }
+                    });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            hideProgressing();
+                            Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+        }
+    }
+
+
 
 
 
@@ -316,7 +401,7 @@ public class AddSaleFrg extends BaseFrg {
             SearchProductsModel place = getItem(position);
             if (place != null) {
                 placeLabel.setText(place.getName());
-               // Glide.with(convertView).load(AppUrl.PRODUCT_IMAGES_URL + place.getImageURL()).into(placeImage);
+                Glide.with(convertView).load(place.getDownloadUrl()).into(placeImage);
             }
 
             convertView.setOnClickListener(new View.OnClickListener() {

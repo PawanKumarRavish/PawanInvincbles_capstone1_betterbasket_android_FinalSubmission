@@ -1,11 +1,12 @@
 package com.project.betterbaskets.models;
 
 
-// made by Rishabh Bhangu Up wala
+
 public class SearchProductsModel {
 
     String uid;
     String name;
+    String downloadUrl;
     String storeId;
     boolean isDataAdded;
     String unitSale ;
@@ -14,9 +15,10 @@ public class SearchProductsModel {
     public SearchProductsModel() {
     }
 
-    public SearchProductsModel(String uid, String name,String storeId,boolean isDataAdded,String unitSale,String salePrice) {
+    public SearchProductsModel(String uid, String name,String downloadUrl,String storeId,boolean isDataAdded,String unitSale,String salePrice) {
         this.uid = uid;
         this.name = name;
+        this.downloadUrl = downloadUrl;
         this.storeId = storeId;
         this.isDataAdded = isDataAdded;
         this.unitSale = unitSale;
@@ -71,5 +73,13 @@ public class SearchProductsModel {
 
     public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 }
