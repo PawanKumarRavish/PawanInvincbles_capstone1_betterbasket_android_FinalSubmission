@@ -38,6 +38,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -263,12 +264,13 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
         @Override
         public void onBindViewHolder(SalesAdapter.MyViewHolder holder, int position) {
 
-             SaleModel childFeedsModel = childFeedList.get(position);
+            SaleModel childFeedsModel = childFeedList.get(position);
             holder.mTitleTv.setText(childFeedsModel.getSaleTitle());
             holder.mDesTv.setText(childFeedsModel.getDescription());
             holder.mStartDateTv.setText("Start Date: "+childFeedsModel.getSaleStartDate());
             holder.mEndDateTv.setText("End Date: "+childFeedsModel.getSaleEndDate());
             holder.mStoreNameTv.setText(childFeedsModel.getStoreName());
+            Glide.with(getActivity()).load(childFeedsModel.getDownloadUrl()).into(holder.mImg);
 
             if(Utils.isSaleExpired(childFeedsModel.getSaleEndDate())){
                 holder.mStatusTv.setText(Constants.EXPIRED);
@@ -302,7 +304,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 }
             });
 
-             int finalTotalAmountToPay = totalAmountToPay;
+            int finalTotalAmountToPay = totalAmountToPay;
             holder.mCheckoutTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -347,7 +349,8 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditTv,mStoreNameTv,mDesTv,mStatusTv,
-            mStartDateTv,mEndDateTv;
+                    mStartDateTv,mEndDateTv;
+            ImageView mImg;
 
             LinearLayout mCheckoutLl,deleteLl;
 
@@ -366,6 +369,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 mStatusTv = (TextView) itemView.findViewById(R.id.mStatusTv);
                 mCheckoutLl = (LinearLayout) itemView.findViewById(R.id.mCheckoutLl);
                 deleteLl = (LinearLayout) itemView.findViewById(R.id.deleteLl);
+                mImg = (ImageView) itemView.findViewById(R.id.mImg);
 
 
 
