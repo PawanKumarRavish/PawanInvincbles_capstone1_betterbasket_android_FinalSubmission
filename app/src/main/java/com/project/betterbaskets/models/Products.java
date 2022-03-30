@@ -2,19 +2,23 @@ package com.project.betterbaskets.models;
 
 // made by pawan and rishabh bhangu
 
+import android.net.Uri;
+
 public class Products {
 
     String uid;
     String name;
     String storeId;
+    String downloadUrl;
 
     public Products() {
     }
 
-    public Products(String uid, String name,String storeId) {
+    public Products(String uid, String name,String storeId,String downloadUrl) {
         this.uid = uid;
         this.name = name;
         this.storeId = storeId;
+        this.downloadUrl = downloadUrl;
     }
 
     public String getUid() {
@@ -40,5 +44,13 @@ public class Products {
 
     public void setStoreId(String storeId) {
         this.storeId = storeId;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 }

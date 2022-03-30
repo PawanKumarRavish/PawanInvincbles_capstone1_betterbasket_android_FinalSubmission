@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,10 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +49,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.project.betterbaskets.BaseFrg;
 import com.project.betterbaskets.R;
 import com.project.betterbaskets.activities.LoginActivity;
@@ -79,16 +86,32 @@ public class ProductsFrg extends BaseFrg {
     ProductsAdapter productsAdapter;
     private static int SPLASH_TIME_OUT = 3000;
 
+    //constant to track image chooser intent
+    private static final int PICK_IMAGE_REQUEST = 234;
+    //uri to store file
+    private Uri filePath;
+
+    //firebase objects
+    private StorageReference storageReference;
+    ImageView mProductImg;
+    Uri downloadUrl=null;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = ProductsLayoutBinding.inflate(inflater,container,false);
         return binding.getRoot();
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+
 
         databaseReference = Utils.initialiseFirebase();
         loggedStore= SharedPreference.getLoggedStore();
@@ -153,15 +176,29 @@ public class ProductsFrg extends BaseFrg {
         View view = getLayoutInflater().inflate(R.layout.dialog_add_product, null);
         Button mAddProduct=view.findViewById(R.id.mAddProductBtn);
         TextInputEditText mName=view.findViewById(R.id.mNameEt);
+         LinearLayout mProductImgLl=view.findViewById(R.id.mProductImgLl);
+        mProductImg=view.findViewById(R.id.mProductImg);
+
+        mProductImgLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
 
 
         mAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mName.getText().toString().trim().isEmpty()){
+                if (downloadUrl == null) {
+                    Toast.makeText(getActivity(), "Please add image", Toast.LENGTH_SHORT).show();
+                } else if(mName.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Add product name", Toast.LENGTH_SHORT).show();
                 } else{
-                    addProduct(mName.getText().toString().trim());
+                    addProduct(mName.getText().toString().trim(),downloadUrl);
                 }
             }
         });
@@ -181,13 +218,13 @@ public class ProductsFrg extends BaseFrg {
 
     }
 
-    private void addProduct(String name) {
+    private void addProduct(String name, Uri downloadUrl) {
         showProgressing(getActivity());
         DatabaseReference productsRef = databaseReference.child(Constants.REF_STORE_PRODUCTS);
         DatabaseReference newProdRef = productsRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new Products(uid,name,loggedStore.getId()), new DatabaseReference.CompletionListener() {
+        newProdRef.setValue(new Products(uid,name,loggedStore.getId(),downloadUrl.toString()), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
@@ -207,6 +244,54 @@ public class ProductsFrg extends BaseFrg {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                mProductImg.setImageBitmap(bitmap);
+
+                uploadImage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        if (filePath != null) {
+            showProgressing(getActivity());
+            StorageReference sRef = storageReference.child(Constants.REF_PRODUCTS_IMAGES).child(System.currentTimeMillis() + "." + Utils.getFileExtension(getActivity(),filePath));
+
+            //adding the file to reference
+            sRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            hideProgressing();
+
+                            //displaying success toast
+                            Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                           sRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                               @Override
+                               public void onSuccess(Uri uri) {
+                                   downloadUrl = uri;
+                                   Log.e("Uri",downloadUrl+"");
+                               }
+                           });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                           hideProgressing();
+                            Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    
+        } 
+    }
 
     //--------------------------------------SalonAdapter-----------------------------------------
     public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyViewHolder> {
@@ -232,7 +317,8 @@ public class ProductsFrg extends BaseFrg {
         public void onBindViewHolder(ProductsAdapter.MyViewHolder holder, int position) {
 
             Products childFeedsModel = childFeedList.get(position);
-            holder.mNameTv.setText(position+1+". "+childFeedsModel.getName());
+            holder.mNameTv.setText(childFeedsModel.getName());
+            Glide.with(getActivity()).load(childFeedsModel.getDownloadUrl()).into(holder.mProductImg);
             holder.mDeleteImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -265,7 +351,7 @@ public class ProductsFrg extends BaseFrg {
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView mNameTv;
-            ImageView mDeleteImg,mEditImg;
+            ImageView mDeleteImg,mEditImg,mProductImg;
 
 
             public MyViewHolder(View itemView) {
@@ -273,6 +359,7 @@ public class ProductsFrg extends BaseFrg {
                 mNameTv = (TextView) itemView.findViewById(R.id.mNameTv);
                 mDeleteImg=itemView.findViewById(R.id.mDeleteImg);
                 mEditImg=itemView.findViewById(R.id.mEditImg);
+                mProductImg=itemView.findViewById(R.id.mProductImg);
 
 
             }
@@ -281,13 +368,13 @@ public class ProductsFrg extends BaseFrg {
 
     private void showEditProductDialog(Products childFeedsModel) {
         View view = getLayoutInflater().inflate(R.layout.dialog_edit_product, null);
-        Button mAddProduct=view.findViewById(R.id.mAddProductBtn);
+        Button mEditProduct=view.findViewById(R.id.mAddProductBtn);
         TextInputEditText mName=view.findViewById(R.id.mNameEt);
 
         mName.setText(childFeedsModel.getName());
 
 
-        mAddProduct.setOnClickListener(new View.OnClickListener() {
+        mEditProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mName.getText().toString().trim().isEmpty()){
@@ -316,7 +403,7 @@ public class ProductsFrg extends BaseFrg {
         showProgressing(getActivity());
         DatabaseReference productsRef = databaseReference.child(Constants.REF_STORE_PRODUCTS).child(childFeedsModel.getUid());
 
-        productsRef.setValue(new Products(childFeedsModel.getUid(),name,loggedStore.getId()), new DatabaseReference.CompletionListener() {
+        productsRef.setValue(new Products(childFeedsModel.getUid(),name,loggedStore.getId(),childFeedsModel.getDownloadUrl()), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){

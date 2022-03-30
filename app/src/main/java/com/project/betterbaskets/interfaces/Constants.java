@@ -20,6 +20,7 @@ public interface Constants {
     public static final String REF_USERS = "users";
     public static final String REF_STORE_PRODUCTS = "store_products";
     public static final String REF_STORE_SALES= "store_sales";
+    public static final String REF_PRODUCTS_IMAGES= "product_images";
     public static final String REF_PAYMENTS= "payments";
     public static final String REF_STORES = "stores";
     public static final String REF_CUSTOMERS = "customers";

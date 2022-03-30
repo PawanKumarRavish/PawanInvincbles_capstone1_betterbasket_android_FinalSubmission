@@ -10,7 +10,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -38,6 +37,38 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_gravity="center"
+                        android:id="@+id/mProductImgLl"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:background="@drawable/dotted_bg"
+                        android:layout_width="158dp"
+                        android:layout_height="113dp">
+
+                        <ImageView
+                            android:id="@+id/mProductImg"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_placeholder"
+                            android:layout_width="48dp"
+                            android:layout_height="34dp">
+                        </ImageView>
+
+                        <TextView
+                            android:layout_marginTop="12dp"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text="Upload Image"
+                            android:textColor="#929292"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+
+                    </LinearLayout>
 
 
 
