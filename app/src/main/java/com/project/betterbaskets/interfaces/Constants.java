@@ -5,6 +5,7 @@ public interface Constants {
     public static final String USER_LOGIN = "userLogin";
     public static final String ADDRESS = "address";
     public static final String NAME= "name";
+    public static final String REF_SALE_IMAGES= "sale_images";
 
     public static final String TYPE = "type";
     public static final String TYPE_STORE = "store";
