@@ -3,6 +3,8 @@ package com.invicibles.betterbaskets.userfragments;
 import static com.invicibles.betterbaskets.utilities.Utils.initialiseFirebase;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.invicibles.betterbaskets.models.Users;
 import com.invicibles.betterbaskets.storeFragments.StoreSalesFrg;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
 import com.invicibles.betterbaskets.utilities.Utils;
+import com.project.betterbaskets.databinding.NearbyStoresLayoutBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +131,12 @@ public class NearbyStoresFrg extends BaseFrg {
             Users childFeedsModel = childFeedList.get(position);
             holder.mAddressTv.setText(childFeedsModel.getAddress());
             holder.mStoreNameTv.setText(childFeedsModel.getName());
+            holder.mDirectionsTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openGoogleMaps(Double.parseDouble(loggedStore.getLat()),Double.parseDouble(loggedStore.getLng()),Double.parseDouble(childFeedsModel.getLat()), Double.parseDouble(childFeedsModel.getLng()));
+                }
+            });
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,17 +164,24 @@ public class NearbyStoresFrg extends BaseFrg {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView mStoreNameTv, mAddressTv;
+            TextView mStoreNameTv, mAddressTv,mDirectionsTv;
             ImageView mImage;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 mStoreNameTv = (TextView) itemView.findViewById(R.id.mStoreNameTv);
                 mAddressTv = (TextView) itemView.findViewById(R.id.mAddressTv);
+                mDirectionsTv = (TextView) itemView.findViewById(R.id.mDirectionsTv);
                 mImage = (ImageView) itemView.findViewById(R.id.mImage);
 
 
             }
         }
+    }
+
+    private void openGoogleMaps(double sourceLat, double sourceLng, double destLat, double destLng) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr="+sourceLat+","+sourceLng+"&daddr="+destLat+","+destLng));
+        startActivity(intent);
     }
 }
