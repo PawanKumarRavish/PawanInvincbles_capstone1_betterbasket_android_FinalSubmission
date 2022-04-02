@@ -191,6 +191,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
+                    updateStock(saleModelToSend.getUid());
                     hideProgressing();
                     Toast.makeText(getActivity(), "Payment Data saved successfully", Toast.LENGTH_LONG).show();
                     Utils.doFragmentTransition(R.id.mFrameLl,new UserHomeFrg(),getActivity().getSupportFragmentManager(),false);
@@ -206,6 +207,12 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
 
 
 
+    }
+
+    private void updateStock(String uid) {
+        int updatedStock=Integer.parseInt(saleModelToSend.getStockAvailable())-1;
+        DatabaseReference saleRef = databaseReference.child(Constants.REF_STORE_SALES).child(uid).child("stockAvailable");
+        saleRef.setValue(String.valueOf(updatedStock));
     }
 
     @Override
@@ -250,6 +257,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             holder.mEndDateTv.setText("End Date: "+childFeedsModel.getSaleEndDate());
             holder.mStoreNameTv.setText(childFeedsModel.getStoreName());
             Glide.with(getActivity()).load(childFeedsModel.getDownloadUrl()).into(holder.mImg);
+            holder.mStockTv.setText("Available Stock: "+childFeedsModel.getStockAvailable());
 
             if(Utils.isSaleExpired(childFeedsModel.getSaleEndDate())){
                 holder.mStatusTv.setText(Constants.EXPIRED);
@@ -276,7 +284,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 }
             });
 
-            holder.mEditTv.setOnClickListener(new View.OnClickListener() {
+            holder.mEditStockTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -288,8 +296,13 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 @Override
                 public void onClick(View view) {
                     if(holder.mStatusTv.getText().toString().equalsIgnoreCase(Constants.ACTIVE)){
-                        saleModelToSend=childFeedsModel;
-                        doStripePayment(finalTotalAmountToPay);
+                        if(!childFeedsModel.getStockAvailable().equalsIgnoreCase("0")){
+                            saleModelToSend=childFeedsModel;
+                            doStripePayment(finalTotalAmountToPay);
+                        }else{
+                            Toast.makeText(getActivity(), "Sorry! No Stock Available", Toast.LENGTH_SHORT).show();
+                        }
+
                     }else{
                         Toast.makeText(getActivity(), "This sale is expired", Toast.LENGTH_SHORT).show();
                     }
@@ -327,8 +340,8 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditTv,mStoreNameTv,mDesTv,mStatusTv,
-                    mStartDateTv,mEndDateTv;
+            TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditStockTv,mStoreNameTv,mDesTv,mStatusTv,
+                    mStartDateTv,mEndDateTv,mStockTv;
             ImageView mImg;
 
             LinearLayout mCheckoutLl,deleteLl;
@@ -339,12 +352,13 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 mViewDetailsTv = (TextView) itemView.findViewById(R.id.mViewDetailsTv);
                 mCheckoutTv = (TextView) itemView.findViewById(R.id.mCheckoutTv);
                 mDeleteTv = (TextView) itemView.findViewById(R.id.mDeleteTv);
-                mEditTv = (TextView) itemView.findViewById(R.id.mEditTv);
+                mEditStockTv = (TextView) itemView.findViewById(R.id.mEditStockTv);
                 mStoreNameTv = (TextView) itemView.findViewById(R.id.mStoreNameTv);
                 mTitleTv = (TextView) itemView.findViewById(R.id.mTitleTv);
                 mDesTv = (TextView) itemView.findViewById(R.id.mDesTv);
                 mStartDateTv = (TextView) itemView.findViewById(R.id.mStartDateTv);
                 mEndDateTv = (TextView) itemView.findViewById(R.id.mEndDateTv);
+                mStockTv = (TextView) itemView.findViewById(R.id.mStockTv);
                 mStatusTv = (TextView) itemView.findViewById(R.id.mStatusTv);
                 mCheckoutLl = (LinearLayout) itemView.findViewById(R.id.mCheckoutLl);
                 deleteLl = (LinearLayout) itemView.findViewById(R.id.deleteLl);

@@ -46,6 +46,7 @@ import com.invicibles.betterbaskets.interfaces.Constants;
 import com.invicibles.betterbaskets.models.SaleModel;
 import com.invicibles.betterbaskets.models.SearchProductsModel;
 import com.invicibles.betterbaskets.models.Users;
+import com.invicibles.betterbaskets.userfragments.UserHomeFrg;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
 import com.invicibles.betterbaskets.utilities.Utils;
 
@@ -227,6 +228,10 @@ public class AddSaleFrg extends BaseFrg {
                     Toast.makeText(getActivity(), "Enter sale start date", Toast.LENGTH_SHORT).show();
                 }else if(binding.mEndDateTv.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Enter sale end date", Toast.LENGTH_SHORT).show();
+                }else if(binding.mStockTv.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Enter stock available", Toast.LENGTH_SHORT).show();
+                }else if(binding.mStockTv.getText().toString().equalsIgnoreCase("0")){
+                    Toast.makeText(getActivity(), "Enter stock available", Toast.LENGTH_SHORT).show();
                 }else if(binding.mDescriptionEt.getText().toString().trim().isEmpty()){
                     Toast.makeText(getActivity(), "Enter sale description", Toast.LENGTH_SHORT).show();
                 }
@@ -256,13 +261,17 @@ public class AddSaleFrg extends BaseFrg {
         DatabaseReference newProdRef = productsRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(), binding.mStartDateTv.getText().toString().trim()
+        newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(),
+                binding.mStockTv.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
                 ,binding.mEndDateTv.getText().toString().trim(), productsList,downloadUrl.toString()), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
                     hideProgressing();
                     Toast.makeText(getActivity(), "Sale saved successfully", Toast.LENGTH_LONG).show();
+                    Utils.doFragmentTransition(R.id.mFrameLl,new StoreSalesFrg(),getActivity().getSupportFragmentManager(),false);
+
+
 
 
                 }else{

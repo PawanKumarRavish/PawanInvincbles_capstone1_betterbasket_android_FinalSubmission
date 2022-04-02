@@ -65,7 +65,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:hint="Unit"
+                android:hint="Qty"
                 android:background="@drawable/edit_text_selector"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">

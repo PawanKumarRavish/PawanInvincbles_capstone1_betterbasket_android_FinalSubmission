@@ -38,6 +38,17 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/mStockTv"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Available Stock: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
                     android:id="@+id/mTitleTv"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
@@ -180,11 +191,25 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/mEditStockTv"
+                    android:padding="@dimen/_3sdp"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Edit Stock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+                <TextView
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:id="@+id/mDeleteTv"
                     android:padding="@dimen/_3sdp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:textColor="@color/red"
                     android:textSize="@dimen/_12sdp"
                     android:text="Delete Sale"
@@ -194,20 +219,7 @@
 
                 </TextView>
 
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/mEditTv"
-                    android:padding="@dimen/_3sdp"
-                    android:gravity="right"
-                    android:layout_weight="1"
-                    android:textColor="@color/purple_500"
-                    android:textSize="@dimen/_12sdp"
-                    android:text="Edit Sale"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
 
-
-                </TextView>
 
 
             </LinearLayout>

@@ -124,6 +124,9 @@
                 </EditText>
 
 
+
+
+
                 <LinearLayout
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="horizontal"
@@ -185,6 +188,22 @@
 
 
                 </LinearLayout>
+
+
+                <EditText
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/mStockTv"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:hint="Stock Available"
+                    android:background="@drawable/edit_text_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp">
+
+
+                </EditText>
 
                 <LinearLayout
                     android:orientation="vertical"
