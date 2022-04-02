@@ -32,7 +32,7 @@ import com.invicibles.betterbaskets.models.Users;
 import com.invicibles.betterbaskets.storeFragments.StoreSalesFrg;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
 import com.invicibles.betterbaskets.utilities.Utils;
-import com.project.betterbaskets.databinding.NearbyStoresLayoutBinding;
+
 
 import java.util.ArrayList;
 import java.util.List;

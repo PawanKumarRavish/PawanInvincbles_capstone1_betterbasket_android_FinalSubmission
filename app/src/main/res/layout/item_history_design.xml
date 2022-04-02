@@ -1,77 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:padding="@dimen/_7sdp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:padding="@dimen/_7sdp"
+        android:background="#1AFF5454"
+        android:weightSum="2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
             <ImageView
-                android:scaleType="fitXY"
                 android:id="@+id/mImage"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_store_img"
-                android:layout_width="76dp"
-                android:layout_height="52dp">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp">
 
             </ImageView>
 
         </LinearLayout>
+
+
+
         <LinearLayout
+            android:layout_margin="@dimen/_7sdp"
             android:orientation="vertical"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_width="match_parent"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/mStoreNameTv"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="16dp"
-                android:gravity="center"
-                android:text="---"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_weight="2"
+                    android:id="@+id/mOrderId"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_12sdp"
+                    android:alpha="0.5"
+                    android:textColor="@android:color/black"
+                    android:text="---"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
-            </TextView>
+                </TextView>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/mDateTv"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_10sdp"
+                    android:alpha="0.5"
+                    android:textColor="@android:color/black"
+                    android:text="Class 12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+
             <TextView
+                android:id="@+id/mHeadingTv"
                 android:ellipsize="end"
-                android:maxLines="2"
-                android:id="@+id/mAddressTv"
-                android:drawableLeft="@drawable/ic_location"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:textSize="14dp"
                 android:text="---"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
             </TextView>
 
-            <TextView
-                android:id="@+id/mDirectionsTv"
-                android:layout_gravity="right"
-                android:padding="@dimen/_5sdp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="@color/purple_500"
-                android:textSize="16dp"
-                android:text="Show Directions"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/mAmountTv"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:text="Amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </TextView>
+                </TextView>
+
+
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 
