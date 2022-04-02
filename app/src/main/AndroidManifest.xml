@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.betterbaskets">
+    package="com.invicibles.betterbaskets">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,16 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterBaskets">
         <activity
-            android:name=".activities.StripePaymentActivity"
+            android:name="com.invicibles.betterbaskets.activities.StripePaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DemoActivity"
+            android:name="com.invicibles.betterbaskets.activities.DemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.StoreHomeActivity"
+            android:name="com.invicibles.betterbaskets.activities.StoreHomeActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.CustomerHomeActivity"
+            android:name="com.invicibles.betterbaskets.activities.CustomerHomeActivity"
             android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -47,23 +47,23 @@
             android:name="com.razorpay.ApiKey"
             android:value="@string/r_test_key" /> <!-- // test -->
         <activity
-            android:name=".activities.AddressActivity"
+            android:name="com.invicibles.betterbaskets.activities.AddressActivity"
             android:exported="false"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name="com.invicibles.betterbaskets.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.OTPVerificationActivity"
+            android:name="com.invicibles.betterbaskets.activities.OTPVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.invicibles.betterbaskets.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.BaseActivity"
+            android:name="com.invicibles.betterbaskets.activities.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.invicibles.betterbaskets.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
