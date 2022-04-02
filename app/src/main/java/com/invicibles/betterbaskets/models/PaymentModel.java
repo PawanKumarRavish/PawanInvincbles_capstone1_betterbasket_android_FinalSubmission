@@ -5,16 +5,18 @@ public class PaymentModel {
     String paymentId;
     SaleModel saleModel;
     String userId;
+    String storeId;
     String totalAmount;
 
     public PaymentModel() {
     }
 
-    public PaymentModel(String uid, String paymentId, SaleModel saleModel,String userId,String totalAmount) {
+    public PaymentModel(String uid, String paymentId, SaleModel saleModel,String userId,String storeId,String totalAmount) {
         this.uid = uid;
         this.paymentId = paymentId;
         this.saleModel = saleModel;
         this.userId = userId;
+        this.storeId = storeId;
         this.totalAmount = totalAmount;
     }
 
@@ -56,5 +58,13 @@ public class PaymentModel {
 
     public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 }

@@ -187,7 +187,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
         DatabaseReference newProdRef = paymentRef.push();
 
         String uid=newProdRef.getKey();
-        newProdRef.setValue(new PaymentModel(uid,razorpayPaymentId,saleModelToSend,loggedStore.getId(),""), new DatabaseReference.CompletionListener() {
+        newProdRef.setValue(new PaymentModel(uid,razorpayPaymentId,saleModelToSend,loggedStore.getId(),saleModelToSend.getStoreId(),""), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){
