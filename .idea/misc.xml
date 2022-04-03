@@ -32,7 +32,7 @@
         <entry key="app/src/main/res/layout/store_sales_layout.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/stripe_checkout_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_home_frg.xml" value="0.18020833333333333" />
-        <entry key="app/src/main/res/layout/validate_sales.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/layout/validate_sales.xml" value="0.25" />
         <entry key="app/src/main/res/menu/activity_home_drawer.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/menu/activity_home_drawer_user.xml" value="0.18020833333333333" />
       </map>
