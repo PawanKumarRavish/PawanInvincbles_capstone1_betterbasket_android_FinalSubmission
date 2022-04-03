@@ -13,7 +13,9 @@ import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 import com.invicibles.betterbaskets.R;
 import com.invicibles.betterbaskets.databinding.ActivityCustomerHomeBinding;
+import com.invicibles.betterbaskets.interfaces.Constants;
 import com.invicibles.betterbaskets.userfragments.NearbyStoresFrg;
+import com.invicibles.betterbaskets.userfragments.UderOrderHistory;
 import com.invicibles.betterbaskets.userfragments.PaymentHistory;
 import com.invicibles.betterbaskets.userfragments.UserHomeFrg;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
@@ -99,6 +101,12 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             finishAffinity();
         }else if (id == R.id.nav_nearbystores) {
             Utils.doFragmentTransition(R.id.mFrameLl,new NearbyStoresFrg(),getSupportFragmentManager(),true);
+        }else if (id == R.id.nav_orders) {
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.TYPE,Constants.TYPE_CUSTOMER);
+            UderOrderHistory uderOrderHistory=new UderOrderHistory();
+            uderOrderHistory.setArguments(bundle);
+            Utils.doFragmentTransition(R.id.mFrameLl,uderOrderHistory,getSupportFragmentManager(),true);
         }
 
         else if (id == R.id.nav_history) {

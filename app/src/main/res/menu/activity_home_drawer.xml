@@ -16,6 +16,11 @@
             android:id="@+id/nav_products"
             android:title="Show Products" />
 
+        <item
+            android:icon="@drawable/ic_orders"
+            android:id="@+id/nav_orders"
+            android:title="Show Orders" />
+
 
         <item
             android:icon="@drawable/ic_sales"

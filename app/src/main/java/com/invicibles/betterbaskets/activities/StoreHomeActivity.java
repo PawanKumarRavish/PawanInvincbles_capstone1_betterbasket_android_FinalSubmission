@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 import com.invicibles.betterbaskets.R;
-import com.invicibles.betterbaskets.databinding.ActivityCustomerHomeBinding;
 import com.invicibles.betterbaskets.databinding.ActivityStoreHomeBinding;
 import com.invicibles.betterbaskets.interfaces.Constants;
 import com.invicibles.betterbaskets.models.Users;
@@ -20,6 +19,7 @@ import com.invicibles.betterbaskets.storeFragments.ProductsFrg;
 import com.invicibles.betterbaskets.storeFragments.StoreHomeFrg;
 import com.invicibles.betterbaskets.storeFragments.StoreSalesFrg;
 import com.invicibles.betterbaskets.storeFragments.ValidateSales;
+import com.invicibles.betterbaskets.userfragments.UderOrderHistory;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
 import com.invicibles.betterbaskets.utilities.Utils;
 // made by harpreet kaur
@@ -111,7 +111,15 @@ public class StoreHomeActivity extends BaseActivity implements NavigationView.On
         }else if (id == R.id.nav_validate) {
             Utils.doFragmentTransition(R.id.mFrameLl,new ValidateSales(),getSupportFragmentManager(),true);
 
-        }else if (id == R.id.nav_sales) {
+        }
+        else if (id == R.id.nav_orders) {
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.TYPE,Constants.TYPE_STORE);
+            UderOrderHistory uderOrderHistory=new UderOrderHistory();
+            uderOrderHistory.setArguments(bundle);
+            Utils.doFragmentTransition(R.id.mFrameLl,uderOrderHistory,getSupportFragmentManager(),true);
+        }
+        else if (id == R.id.nav_sales) {
             Bundle bundle=new Bundle();
             bundle.putString(Constants.STORE_ID,loggedStore.getId());
             bundle.putString(Constants.TYPE,Constants.TYPE_STORE);

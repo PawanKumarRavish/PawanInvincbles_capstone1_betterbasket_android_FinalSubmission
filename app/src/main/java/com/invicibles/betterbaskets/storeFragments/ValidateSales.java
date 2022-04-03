@@ -22,6 +22,8 @@ import com.invicibles.betterbaskets.BaseFrg;
 import com.invicibles.betterbaskets.databinding.StoreHomeFrgBinding;
 import com.invicibles.betterbaskets.databinding.ValidateSalesBinding;
 import com.invicibles.betterbaskets.interfaces.Constants;
+import com.invicibles.betterbaskets.models.OrderModel;
+import com.invicibles.betterbaskets.models.PaymentModel;
 import com.invicibles.betterbaskets.models.SaleModel;
 import com.invicibles.betterbaskets.models.Users;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
@@ -40,7 +42,7 @@ public class ValidateSales extends BaseFrg {
     Users loggedStore;
     DatabaseReference databaseReference;
     List<SaleModel> saleList;
-    String saleId;
+    String saleId,saleCode;
 
     @Nullable
     @Override
@@ -79,21 +81,48 @@ public class ValidateSales extends BaseFrg {
                 databaseReference.child(Constants.REF_STORE_SALES).child(saleId).child("isCompleted").setValue("true").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Utils.showDialog(getActivity(), "Alert", "Sale Completed Successfully.", new Utils.iPostiveBtnListener() {
-                            @Override
-                            public void onPositiveBtnClicked() {
-                            }
-                        });
-                        binding.mSearchEt.setText("");
-                        binding.mSaleLl.setVisibility(View.GONE);
+                        changeOrderStatus();
                     }
                 });
-
 
 
             }
         });
 
+
+    }
+
+
+    private void changeOrderStatus() {
+        databaseReference.child(Constants.REF_ORDERS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s: snapshot.getChildren()) {
+                    OrderModel orders = s.getValue(OrderModel.class);
+                    if(orders.getSaleModel().getCode().equalsIgnoreCase(binding.mSearchEt.getText().toString().trim())){
+                        databaseReference.child(Constants.REF_ORDERS).child(orders.getUid()).child("orderStatus").setValue("Delivered");
+                        break;
+                    }
+
+                }
+
+                Utils.showDialog(getActivity(), "Alert", "Sale Completed Successfully.", new Utils.iPostiveBtnListener() {
+                    @Override
+                    public void onPositiveBtnClicked() {
+                    }
+                });
+                binding.mSearchEt.setText("");
+                binding.mSaleLl.setVisibility(View.GONE);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
@@ -122,6 +151,7 @@ public class ValidateSales extends BaseFrg {
                 binding.mStartDateTv.setText(saleList.get(i).getSaleStartDate());
                 binding.mEndDateTv.setText(saleList.get(i).getSaleEndDate());
                 saleId=saleList.get(i).getUid();
+                saleCode=saleList.get(i).getCode();
 
             }
         }
