@@ -67,4 +67,5 @@ public class PaymentModel {
     public void setStoreId(String storeId) {
         this.storeId = storeId;
     }
+
 }

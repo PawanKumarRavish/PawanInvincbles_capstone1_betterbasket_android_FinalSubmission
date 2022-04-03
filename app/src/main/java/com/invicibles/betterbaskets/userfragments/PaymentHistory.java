@@ -151,12 +151,12 @@ public class PaymentHistory extends BaseFrg {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView mDateTv, mHeadingTv, mAmountTv, mOrderIdTv;
+            TextView mDateTv, mHeadingTv, mAmountTv, mOrderIdTv,mOrderStatusTv;
             ImageView mImage;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                mDateTv = (TextView) itemView.findViewById(R.id.mDateTv);
+                mOrderStatusTv = (TextView) itemView.findViewById(R.id.mOrderStatusTv);
                 mHeadingTv = (TextView) itemView.findViewById(R.id.mHeadingTv);
                 mOrderIdTv = (TextView) itemView.findViewById(R.id.mOrderId);
                 mOrderIdTv = (TextView) itemView.findViewById(R.id.mOrderId);

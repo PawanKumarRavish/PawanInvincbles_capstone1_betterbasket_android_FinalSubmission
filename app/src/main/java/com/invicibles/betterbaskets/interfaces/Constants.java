@@ -23,6 +23,8 @@ public interface Constants {
     public static final String REF_STORE_SALES= "store_sales";
     public static final String REF_PRODUCTS_IMAGES= "product_images";
     public static final String REF_PAYMENTS= "payments";
+    public static final String REF_ORDERS= "orders";
+    public static final String STATUS_READY_TO_PICK= "Ready To Pick";
     public static final String REF_STORES = "stores";
     public static final String REF_CUSTOMERS = "customers";
     public static final String PHONE_CODE = "+1";

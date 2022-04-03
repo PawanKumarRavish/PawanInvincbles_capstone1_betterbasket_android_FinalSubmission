@@ -263,7 +263,7 @@ public class AddSaleFrg extends BaseFrg {
         String uid=newProdRef.getKey();
         newProdRef.setValue(new SaleModel(uid,loggedStore.getId(),loggedStore.getName(),binding.mTitleEt.getText().toString().trim(),binding.mDescriptionEt.getText().toString().trim(),
                 binding.mStockTv.getText().toString().trim(),binding.mStartDateTv.getText().toString().trim()
-                ,binding.mEndDateTv.getText().toString().trim(), productsList,downloadUrl.toString()), new DatabaseReference.CompletionListener() {
+                ,binding.mEndDateTv.getText().toString().trim(), productsList,downloadUrl.toString(),String.valueOf(Utils.randomCode()),"false"), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if(error==null){

@@ -49,6 +49,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -351,6 +352,11 @@ public class Utils {
         ContentResolver cR = context.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    public static int randomCode(){
+        Random r = new Random( System.currentTimeMillis() );
+        return ((1 + r.nextInt(2)) * 10000 + r.nextInt(10000));
     }
 
 

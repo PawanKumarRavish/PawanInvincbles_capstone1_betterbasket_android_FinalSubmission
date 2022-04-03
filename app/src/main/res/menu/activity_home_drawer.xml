@@ -7,9 +7,19 @@
             android:title="Home" />
 
         <item
+            android:icon="@drawable/ic_sales"
+            android:id="@+id/nav_validate"
+            android:title="Validate Sales" />
+
+        <item
             android:icon="@drawable/ic_products"
             android:id="@+id/nav_products"
             android:title="Show Products" />
+
+        <item
+            android:icon="@drawable/ic_orders"
+            android:id="@+id/nav_orders"
+            android:title="Show Orders" />
 
 
         <item

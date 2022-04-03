@@ -44,6 +44,7 @@ import com.invicibles.betterbaskets.activities.StripePaymentActivity;
 import com.invicibles.betterbaskets.databinding.AddSaleLayoutBinding;
 import com.invicibles.betterbaskets.databinding.StoreSalesLayoutBinding;
 import com.invicibles.betterbaskets.interfaces.Constants;
+import com.invicibles.betterbaskets.models.OrderModel;
 import com.invicibles.betterbaskets.models.PaymentModel;
 import com.invicibles.betterbaskets.models.SaleModel;
 import com.invicibles.betterbaskets.models.Users;
@@ -167,6 +168,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             public void onClick(View v) {
                 alertDialog.dismiss();
                 savePaymentResponse(razorpayPaymentId);
+                generateOrder(razorpayPaymentId);
 
 
             }
@@ -179,6 +181,25 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
         alertDialog.show();
         Window window = alertDialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    private void generateOrder(String razorpayPaymentId) {
+        DatabaseReference paymentRef = databaseReference.child(Constants.REF_ORDERS);
+        DatabaseReference newProdRef = paymentRef.push();
+
+        String uid=newProdRef.getKey();
+        newProdRef.setValue(new OrderModel(uid,razorpayPaymentId,saleModelToSend,loggedStore.getId(),saleModelToSend.getStoreId(),"",Constants.STATUS_READY_TO_PICK), new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if(error==null){
+
+                }else{
+                    Toast.makeText(getActivity(), "Error in saving payment data "+error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
     }
 
     private void savePaymentResponse(String razorpayPaymentId) {
