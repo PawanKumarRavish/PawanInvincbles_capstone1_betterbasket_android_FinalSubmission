@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/app_form_style"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Enter Sale code to validate Sale"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:id="@+id/mStoreNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/edit_text_selector"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp">
+
+                <EditText
+                    android:inputType="number"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:textSize="18sp"
+                    android:background="@android:color/transparent"
+                    android:layout_weight="1.7"
+                    android:padding="10dp"
+                    android:id="@+id/mSearchEt"
+                    android:singleLine="true"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/mSearchLl"
+                    android:gravity="center"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:src="@drawable/ic_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </ImageView>
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/mSaleLl"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="#FCF4FF"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="@dimen/_7sdp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1.4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/mTitleTv"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:text="Sale Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                    </TextView>
+
+                    <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:id="@+id/mDesTv"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_11sdp"
+                        android:text="Sale Description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/mStartDateTv"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_11sdp"
+                        android:text="Sale StartDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/mEndDateTv"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_11sdp"
+                        android:text="Sale EndDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                    </TextView>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:background="@color/grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp">
+
+                </View>
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/deleteLl"
+                    android:padding="@dimen/_7sdp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:id="@+id/mCompleteTv"
+                        android:padding="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_12sdp"
+                        android:text="Make As Complete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+
+                    </TextView>
+
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
