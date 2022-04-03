@@ -19,6 +19,7 @@ import com.invicibles.betterbaskets.models.Users;
 import com.invicibles.betterbaskets.storeFragments.ProductsFrg;
 import com.invicibles.betterbaskets.storeFragments.StoreHomeFrg;
 import com.invicibles.betterbaskets.storeFragments.StoreSalesFrg;
+import com.invicibles.betterbaskets.storeFragments.ValidateSales;
 import com.invicibles.betterbaskets.utilities.SharedPreference;
 import com.invicibles.betterbaskets.utilities.Utils;
 // made by harpreet kaur
@@ -106,6 +107,9 @@ public class StoreHomeActivity extends BaseActivity implements NavigationView.On
             finishAffinity();
         }else if (id == R.id.nav_products) {
             Utils.doFragmentTransition(R.id.mFrameLl,new ProductsFrg(),getSupportFragmentManager(),true);
+
+        }else if (id == R.id.nav_validate) {
+            Utils.doFragmentTransition(R.id.mFrameLl,new ValidateSales(),getSupportFragmentManager(),true);
 
         }else if (id == R.id.nav_sales) {
             Bundle bundle=new Bundle();
