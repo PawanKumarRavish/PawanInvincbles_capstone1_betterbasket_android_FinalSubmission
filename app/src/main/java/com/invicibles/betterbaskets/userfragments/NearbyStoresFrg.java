@@ -140,7 +140,7 @@ public class NearbyStoresFrg extends BaseFrg {
             holder.mDirectionsTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //openGoogleMaps(Double.parseDouble(loggedStore.getLat()),Double.parseDouble(loggedStore.getLng()),Double.parseDouble(childFeedsModel.getLat()), Double.parseDouble(childFeedsModel.getLng()));
+                    openGoogleMaps(Double.parseDouble(loggedStore.getLat()),Double.parseDouble(loggedStore.getLng()),Double.parseDouble(childFeedsModel.getLat()), Double.parseDouble(childFeedsModel.getLng()));
                 }
             });
 
@@ -185,5 +185,9 @@ public class NearbyStoresFrg extends BaseFrg {
         }
     }
 
-
+    private void openGoogleMaps(double sourceLat, double sourceLng, double destLat, double destLng) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr="+sourceLat+","+sourceLng+"&daddr="+destLat+","+destLng));
+        startActivity(intent);
+    }
 }
