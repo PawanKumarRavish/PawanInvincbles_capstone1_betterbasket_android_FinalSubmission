@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:textSize="@dimen/_14sdp"
                     android:textColor="@color/red"
                     android:text="Change Range"
                     android:textStyle="bold"

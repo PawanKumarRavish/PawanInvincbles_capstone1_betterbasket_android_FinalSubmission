@@ -97,6 +97,25 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--<com.github.mikephil.charting.charts.PieChart
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/mBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp"/>-->
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id = "@+id/mBarChart"
+                android:layout_width = "fill_parent"
+                android:layout_height = "fill_parent" />
+
+        </LinearLayout>
+
 
 
 

@@ -31,7 +31,7 @@
         <entry key="app/src/main/res/layout/order_history.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/payment_history.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/payment_success_layout.xml" value="0.18020833333333333" />
-        <entry key="app/src/main/res/layout/store_home_frg.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/layout/store_home_frg.xml" value="0.165" />
         <entry key="app/src/main/res/layout/store_sales_layout.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/stripe_checkout_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_home_frg.xml" value="0.18020833333333333" />
