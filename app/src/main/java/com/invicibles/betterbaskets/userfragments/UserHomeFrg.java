@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class UserHomeFrg extends BaseFrg implements OnMapReadyCallback {
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
     GoogleMap mMap;
+    double range=30.0;
 
     @Nullable
     @Override
@@ -78,10 +80,40 @@ public class UserHomeFrg extends BaseFrg implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         storeList=new ArrayList<>();
-        showNearbyStores();
+        showNearbyStoresUpto30Km();
+
+        binding.mSelectedRangeTv.setText("Selected Range: 30 km");
+
+
+        binding.simpleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                binding.mSelectedRangeTv.setText("Selected Range: "+progressChangedValue+" km");
+                range=Double.parseDouble(String.valueOf(progressChangedValue));
+                //Toast.makeText(getActivity(), "Seek bar progress is :" + progressChangedValue+" Km", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.mApplyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Range",range+"");
+                showNearbyStoresUpto30Km();
+
+            }
+        });
     }
 
-    private void showNearbyStores() {
+    private void showNearbyStoresUpto30Km() {
         showProgressing(getActivity());
         databaseReference.child(Constants.REF_USERS).child(Constants.REF_STORES).addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,7 +122,14 @@ public class UserHomeFrg extends BaseFrg implements OnMapReadyCallback {
                 hideProgressing();
                 for (DataSnapshot s: snapshot.getChildren()) {
                     Users users = s.getValue(Users.class);
-                    storeList.add(users);
+                    double distanceInMeters = Utils.calculateDistance(Double.parseDouble(SharedPreference.getLat()), Double.parseDouble(SharedPreference.getLng()), Double.parseDouble(users.getLat()),
+                            Double.parseDouble(users.getLng()));
+                    double distanceInKm=distanceInMeters/1000;
+                    Log.e("km",distanceInKm+"");
+                    if(distanceInKm<=range){
+                        storeList.add(users);
+                    }
+
 
                 }
 
@@ -112,6 +151,14 @@ public class UserHomeFrg extends BaseFrg implements OnMapReadyCallback {
     }
 
     private void setMarkers(List<Users> storeList) {
+        mMap.clear();
+        LatLng currentUserLatLng = new LatLng(Double.parseDouble(SharedPreference.getLat()), Double.parseDouble(SharedPreference.getLng()));
+        //LatLng latLng = new LatLng(43.653225, -79.383186);
+        MarkerOptions markerOptions = new MarkerOptions().position(currentUserLatLng).title("I am here!").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(currentUserLatLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLng, 12));
+        mMap.addMarker(markerOptions);
+
         for(int i=0;i<storeList.size();i++){
             LatLng latLng = new LatLng(Double.parseDouble(storeList.get(i).getLat()), Double.parseDouble(storeList.get(i).getLng()));
             Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(storeList.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));

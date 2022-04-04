@@ -95,6 +95,19 @@
 
                 </TextView>
 
+
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/mSaleCodeTv"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="---"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
             </LinearLayout>
 
             <LinearLayout

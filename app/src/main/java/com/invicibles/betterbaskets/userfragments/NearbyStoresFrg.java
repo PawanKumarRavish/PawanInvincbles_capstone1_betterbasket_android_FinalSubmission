@@ -64,11 +64,11 @@ public class NearbyStoresFrg extends BaseFrg {
         storesAdapter = new StoresAdapter(getActivity(), storeList);
         binding.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        showNearbyStores();
+        showNearbyStoresUpto30Km();
     }
 
 
-    private void showNearbyStores() {
+    private void showNearbyStoresUpto30Km() {
         showProgressing(getActivity());
         databaseReference.child(Constants.REF_USERS).child(Constants.REF_STORES).addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,7 +77,13 @@ public class NearbyStoresFrg extends BaseFrg {
                 hideProgressing();
                 for (DataSnapshot s: snapshot.getChildren()) {
                     Users users = s.getValue(Users.class);
-                    storeList.add(users);
+                    double distanceInMeters = Utils.calculateDistance(Double.parseDouble(SharedPreference.getLat()), Double.parseDouble(SharedPreference.getLng()), Double.parseDouble(users.getLat()),
+                            Double.parseDouble(users.getLng()));
+                    double distanceInKm=distanceInMeters/1000;
+                    Log.e("km",distanceInKm+"");
+                    if(distanceInKm<=30.0){
+                        storeList.add(users);
+                    }
 
                 }
 

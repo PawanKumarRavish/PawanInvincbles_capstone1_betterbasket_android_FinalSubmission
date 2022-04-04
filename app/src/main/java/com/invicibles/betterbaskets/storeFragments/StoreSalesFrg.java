@@ -279,6 +279,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
             holder.mStoreNameTv.setText(childFeedsModel.getStoreName());
             Glide.with(getActivity()).load(childFeedsModel.getDownloadUrl()).into(holder.mImg);
             holder.mStockTv.setText("Available Stock: "+childFeedsModel.getStockAvailable());
+            holder.mSaleCodeTv.setText("Code: "+childFeedsModel.getCode());
 
             if(Utils.isSaleExpired(childFeedsModel.getSaleEndDate())){
                 holder.mStatusTv.setText(Constants.EXPIRED);
@@ -362,7 +363,7 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView mTitleTv,mViewDetailsTv,mCheckoutTv,mDeleteTv,mEditStockTv,mStoreNameTv,mDesTv,mStatusTv,
-                    mStartDateTv,mEndDateTv,mStockTv;
+                    mStartDateTv,mEndDateTv,mStockTv,mSaleCodeTv;
             ImageView mImg;
 
             LinearLayout mCheckoutLl,deleteLl;
@@ -381,18 +382,20 @@ public class StoreSalesFrg extends BaseFrg implements ApiResultCallback<PaymentI
                 mEndDateTv = (TextView) itemView.findViewById(R.id.mEndDateTv);
                 mStockTv = (TextView) itemView.findViewById(R.id.mStockTv);
                 mStatusTv = (TextView) itemView.findViewById(R.id.mStatusTv);
+                mSaleCodeTv = (TextView) itemView.findViewById(R.id.mSaleCodeTv);
                 mCheckoutLl = (LinearLayout) itemView.findViewById(R.id.mCheckoutLl);
                 deleteLl = (LinearLayout) itemView.findViewById(R.id.deleteLl);
                 mImg = (ImageView) itemView.findViewById(R.id.mImg);
 
-
-
                 if(type.equalsIgnoreCase(Constants.TYPE_CUSTOMER)){
                     mCheckoutLl.setVisibility(View.VISIBLE);
                     deleteLl.setVisibility(View.GONE);
+                    mSaleCodeTv.setVisibility(View.VISIBLE);
                 }else{
                     mCheckoutLl.setVisibility(View.GONE);
                     deleteLl.setVisibility(View.VISIBLE);
+                    mSaleCodeTv.setVisibility(View.GONE);
+
                 }
 
 

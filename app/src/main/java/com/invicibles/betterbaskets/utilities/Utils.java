@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -52,13 +53,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-/**
- * Created by Gaganjot Singh on 28/07/2020.
- */
 public class Utils {
-
-
-
 
     public static boolean isSingelton=false;
 
@@ -357,6 +352,25 @@ public class Utils {
     public static int randomCode(){
         Random r = new Random( System.currentTimeMillis() );
         return ((1 + r.nextInt(2)) * 10000 + r.nextInt(10000));
+    }
+
+
+    public static double calculateDistance(double startLat, double startLng, double endLat, double endLng ){
+        try {
+            Location location1 = new Location("locationA");
+            location1.setLatitude(startLat);
+            location1.setLongitude(startLng);
+            Location location2 = new Location("locationB");
+            location2.setLatitude(endLat);
+            location2.setLongitude(endLng);
+            double distance = location1.distanceTo(location2);
+            return distance;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return 0;
     }
 
 
